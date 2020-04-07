@@ -17,3 +17,6 @@ up:
 
 build:
 	go build -v -o ./${BINARY} ./internal/main.go
+
+clean:
+	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
