@@ -1,9 +1,9 @@
-BINARY=vd
+BINARY=api_server
 
 run-local:
 	go run ./internal/main.go
 
-build:
+build-dc:
 	docker-compose \
 	-f docker/compose/docker-compose.dev.yml \
 	--project-directory ./ \
@@ -14,3 +14,9 @@ up:
 	-f docker/compose/docker-compose.dev.yml \
 	--project-directory ./ \
 	up
+
+build:
+	go build -v -o ./${BINARY} ./internal/main.go
+
+clean:
+	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
