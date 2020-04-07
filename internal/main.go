@@ -25,7 +25,7 @@ func main() {
 	// bind routes
 	delivery.NewHandler(g, helloService)
 
-	port := os.Getenv("HTTP_PORT")
+	port := os.Getenv("PORT")
 	if port == "" {
 		port = "5000"
 	}
