@@ -1,4 +1,4 @@
-version: "3.7"
+version: "2.2"
 
 services:
   database:
@@ -13,7 +13,7 @@ services:
     volumes:
       - ./docker/postgres-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "8081:5432"
 
   migrator:
     build:

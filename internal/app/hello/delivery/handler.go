@@ -1,7 +1,7 @@
 package delivery
 
 import (
-	"Vegan_delivery_API/internal/hello"
+	"github.com/efimovad/Vegan_delivery_API/internal/app/hello"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )

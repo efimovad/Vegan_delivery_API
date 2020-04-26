@@ -1,9 +1,11 @@
 package main
 
 import (
-	"Vegan_delivery_API/internal/hello/delivery"
-	"Vegan_delivery_API/internal/hello/usecase"
 	"fmt"
+	dishhttp "github.com/efimovad/Vegan_delivery_API/internal/app/dish/delivery/http"
+	"github.com/efimovad/Vegan_delivery_API/internal/app/hello/delivery"
+	"github.com/efimovad/Vegan_delivery_API/internal/app/hello/usecase"
+	placehttp "github.com/efimovad/Vegan_delivery_API/internal/app/place/delivery/http"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"log"
@@ -24,6 +26,9 @@ func main() {
 
 	// bind routes
 	delivery.NewHandler(g, helloService)
+	dishhttp.NewHandler(g)
+	placehttp.NewHandler(g)
+
 
 	port := os.Getenv("PORT")
 	fmt.Printf("env var PORT: %s\n", port)

@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"Vegan_delivery_API/internal/hello"
-	"Vegan_delivery_API/internal/models"
+	"github.com/efimovad/Vegan_delivery_API/internal/app/hello"
+	"github.com/efimovad/Vegan_delivery_API/internal/models"
 )
 
 type Service struct {
