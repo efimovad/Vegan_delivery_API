@@ -3,6 +3,7 @@ package placehttp
 import (
 	"github.com/efimovad/Vegan_delivery_API/internal/app/place"
 	placeusecase "github.com/efimovad/Vegan_delivery_API/internal/app/place/usecase"
+	"github.com/efimovad/Vegan_delivery_API/internal/models"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -24,7 +25,7 @@ func (h *Handler) GetPlaces(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusNotFound, err)
 	}
-	return c.JSON(http.StatusOK, data)
+	return c.JSON(http.StatusOK, map[string][]models.Place{"places":data})
 }
 
 

@@ -3,6 +3,7 @@ package dishhttp
 import (
 	"github.com/efimovad/Vegan_delivery_API/internal/app/dish"
 	dishusecase "github.com/efimovad/Vegan_delivery_API/internal/app/dish/usecase"
+	"github.com/efimovad/Vegan_delivery_API/internal/models"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -25,7 +26,7 @@ func (h *Handler) GetDishes(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusNotFound, err)
 	}
-	return c.JSON(http.StatusOK, data)
+	return c.JSON(http.StatusOK, map[string][]models.Dish{"dishes":data})
 }
 
 func (h *Handler) GetDish(c echo.Context) error {
