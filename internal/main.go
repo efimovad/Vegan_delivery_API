@@ -6,6 +6,7 @@ import (
 	"github.com/efimovad/Vegan_delivery_API/internal/app/hello/delivery"
 	"github.com/efimovad/Vegan_delivery_API/internal/app/hello/usecase"
 	placehttp "github.com/efimovad/Vegan_delivery_API/internal/app/place/delivery/http"
+	profilehttp "github.com/efimovad/Vegan_delivery_API/internal/app/profile/delivery/http"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"log"
@@ -28,6 +29,7 @@ func main() {
 	delivery.NewHandler(g, helloService)
 	dishhttp.NewHandler(g)
 	placehttp.NewHandler(g)
+	profilehttp.NewHandler(g)
 
 
 	port := os.Getenv("PORT")
