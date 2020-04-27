@@ -23,7 +23,7 @@ func NewHandler(e *echo.Group) {
 func (h *Handler) GetProfile(c echo.Context) error {
 	idStr := c.Param("id")
 
-	id, err := strconv.ParseInt(idStr, 64, 10)
+	id, err := strconv.ParseInt(idStr, 10, 64)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, err)
 	}
