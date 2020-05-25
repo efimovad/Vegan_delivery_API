@@ -17,7 +17,9 @@ import (
 	_ "github.com/lib/pq"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/pkg/errors"
+	"io/ioutil"
 	"log"
+	"strings"
 )
 
 type Server struct {
@@ -84,5 +86,17 @@ func newDB(dbURL string) (*sql.DB, error) {
 		return nil, err
 	}
 	db.SetMaxOpenConns(20)
+
+	file, err := ioutil.ReadFile("./database/sql/init_schema.sql")
+	if err != nil {
+		return nil, err
+	}
+
+	requests := strings.Split(string(file), ";")
+	for _, request := range requests {
+		_, err := db.Exec(request)
+		return nil, err
+	}
+
 	return db, nil
 }
