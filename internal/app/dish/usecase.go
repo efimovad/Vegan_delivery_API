@@ -6,6 +6,6 @@ import (
 
 type IUsecase interface {
 	GetDishes(cafeID int64) ([]models.Dish, error)
-	GetDish(ID int64) (models.Dish, error)
+	GetDish(ID int64) (*models.Dish, error)
 	AddDish(dish models.Dish) error
 }

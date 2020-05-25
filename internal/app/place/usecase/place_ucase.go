@@ -6,37 +6,15 @@ import (
 )
 
 type Usecase struct {
+	repo place.IRepository
 }
 
-func NewPlaceUsecase() place.IUsecase {
+func NewPlaceUsecase(repository place.IRepository) place.IUsecase {
 	return &Usecase{
+		repo: repository,
 	}
 }
 
-func (u Usecase) GetPlaces() ([]models.Place, error) {
-	place1 := models.Place{
-		ID:           1,
-		Name:         "Nancy Pizza",
-		MinCost:      199,
-		Grade:        4.9,
-		DeliveryTime: 45,
-	}
-	
-	place2 := models.Place{
-		ID:           2,
-		Name:         "Veganga",
-		MinCost:      399,
-		Grade:        4.5,
-		DeliveryTime: 35,
-	}
-	
-	place3 := models.Place{
-		ID:           3,
-		Name:         "Raw to go",
-		MinCost:      599,
-		Grade:        4.3,
-		DeliveryTime: 35,
-	}
-
-	return []models.Place{place1, place2, place3}, nil
+func (u *Usecase) GetPlaces(params models.Params) ([]models.Place, error) {
+	return u.repo.List(params)
 }
