@@ -94,8 +94,7 @@ func newDB(dbURL string) (*sql.DB, error) {
 
 	requests := strings.Split(string(file), ";")
 	for _, request := range requests {
-		_, err := db.Exec(request)
-		return nil, err
+		_, _ = db.Exec(request)
 	}
 
 	return db, nil
