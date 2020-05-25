@@ -87,7 +87,7 @@ func newDB(dbURL string) (*sql.DB, error) {
 	}
 	db.SetMaxOpenConns(20)
 
-	file, err := ioutil.ReadFile("./database/sql/init_schema.sql")
+	file, err := ioutil.ReadFile("./internal/database/sql/init_schema.sql")
 	if err != nil {
 		return nil, err
 	}
