@@ -53,7 +53,7 @@ func (r *DishRepository) Find(id int64) (*models.Dish, error) {
 func (r *DishRepository) List(cafe int64, params models.Params) ([]models.Dish, error) {
 	var dishes []models.Dish
 	rows, err := r.db.Query(
-		"SELECT id, name, cafe, ingredients, calories, weight, cost, inStock "+
+		"SELECT id, name, cafe, ingredients, calories, weight, cost, inStock, image "+
 			"FROM dishes " +
 			"WHERE cafe = $1"+
 			"LIMIT $2 OFFSET CASE WHEN $3 > 0 THEN ($3 - 1) * $2 END;",
@@ -64,7 +64,8 @@ func (r *DishRepository) List(cafe int64, params models.Params) ([]models.Dish, 
 	}
 	for rows.Next() {
 		item := models.Dish{}
-		err := rows.Scan(&item.ID, &item.Name, &item.Cafe, &item.Ingredients, &item.Calories, &item.Weight, &item.Cost, &item.InStock)
+		err := rows.Scan(&item.ID, &item.Name, &item.Cafe, &item.Ingredients, &item.Calories, &item.Weight,
+			&item.Cost, &item.InStock, &item.Image)
 
 		if err != nil {
 			return nil, err
