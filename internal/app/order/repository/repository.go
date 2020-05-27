@@ -61,7 +61,7 @@ func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.O
 	var prices pq.Int64Array
 
 	rows, err := r.db.Query(`
-			SELECT ord.id, places.name, ord.date, ord.cost, ord.status, ord.address, 
+			SELECT ord.id, places.name, ord.date, ord.cost, ord.status, ord.address, places.logo, 
 			       (SELECT array_agg(dishes.name)
 			       	FROM orders_details 
 			       	INNER JOIN dishes ON dishes.id = orders_details.dish_id 
@@ -87,7 +87,7 @@ func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.O
 
 	for rows.Next() {
 		i := models.Order{}
-		err := rows.Scan(&i.ID, &i.CafeName, &i.Date, &i.Cost, &i.Status, &i.Address, &names, &counts, &prices)
+		err := rows.Scan(&i.ID, &i.CafeName, &i.Date, &i.Cost, &i.Status, &i.Address, &i.CafeLogo, &names, &counts, &prices)
 
 		if err != nil {
 			return nil, err

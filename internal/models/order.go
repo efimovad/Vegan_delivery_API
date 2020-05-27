@@ -15,6 +15,7 @@ type Order struct {
 	User		int64		`json:"user,omitempty"`
 	Cafe		int64		`json:"cafe,omitempty"`
 	CafeName	string		`json:"cafeName,omitempty"`
+	CafeLogo	string		`json:"cafeLogo,omitempty"`
 	Items		[]Item 		`json:"items,omitempty" validate:"min=0,max=30"`
 	ItemsFull	[]ItemFull	`json:"itemsFull,omitempty"`
 	Date		time.Time	`json:"date"`
