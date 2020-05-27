@@ -17,12 +17,13 @@ func NewOrderRepository(db *sql.DB) order.IRepository {
 
 func (r *OrderRepository) Create(newOrder models.Order) (int64, error) {
 	err :=  r.db.QueryRow(
-		`INSERT INTO orders ("user", cafe, date, cost, status) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+		`INSERT INTO orders ("user", cafe, date, cost, status, address) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id`,
 		newOrder.User,
 		newOrder.Cafe,
 		newOrder.Date,
 		newOrder.Cost,
 		newOrder.Status,
+		newOrder.Address,
 	).Scan(&newOrder.ID)
 
 	txn, err := r.db.Begin()
@@ -57,9 +58,10 @@ func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.O
 	var orders []models.Order
 	var names pq.StringArray
 	var counts pq.Int64Array
+	var prices pq.Int64Array
 
 	rows, err := r.db.Query(`
-			SELECT ord.id, places.name, ord.date, ord.cost, ord.status,
+			SELECT ord.id, places.name, ord.date, ord.cost, ord.status, ord.address, 
 			       (SELECT array_agg(dishes.name)
 			       	FROM orders_details 
 			       	INNER JOIN dishes ON dishes.id = orders_details.dish_id 
@@ -67,7 +69,11 @@ func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.O
 			       (SELECT array_agg(orders_details.count)
 			       	FROM orders_details 
 			       	INNER JOIN dishes ON dishes.id = orders_details.dish_id 
-			       	WHERE orders_details.order_id = ord.id)
+			       	WHERE orders_details.order_id = ord.id),
+			       (SELECT array_agg(dishes.cost)
+			       	FROM orders_details 
+			       	INNER JOIN dishes ON dishes.id = orders_details.dish_id 
+			       	WHERE orders_details.order_id = ord.id) 
 			FROM orders ord
 			INNER JOIN places ON places.id = ord.cafe
 			WHERE ord."user" = $1 
@@ -81,7 +87,7 @@ func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.O
 
 	for rows.Next() {
 		i := models.Order{}
-		err := rows.Scan(&i.ID, &i.CafeName, &i.Date, &i.Cost, &i.Status, &names, &counts)
+		err := rows.Scan(&i.ID, &i.CafeName, &i.Date, &i.Cost, &i.Status, &i.Address, &names, &counts, &prices)
 
 		if err != nil {
 			return nil, err
@@ -92,6 +98,7 @@ func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.O
 			item := models.ItemFull{}
 			item.Name = names[j]
 			item.Count = counts[j]
+			item.Price = int(prices[j])
 			itemsFull = append(itemsFull, item)
 		}
 

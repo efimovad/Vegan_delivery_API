@@ -10,4 +10,5 @@ type Dish struct {
 	Cost 		int		`json:"cost"`
 	Image 		string	`json:"image"`
 	InStock		bool	`json:"inStock"`
+	Tag			int		`json:"tag"`
 }

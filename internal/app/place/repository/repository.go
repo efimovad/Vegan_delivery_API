@@ -17,7 +17,7 @@ func NewPlaceRepository(db *sql.DB) place.IRepository {
 func (r *PlaceRepository) List(params models.Params) ([]models.Place, error) {
 	var items []models.Place
 	rows, err := r.db.Query(`
-			SELECT id, name, minCost, grade, image, latitude, longitude 
+			SELECT id, name, minCost, grade, image, latitude, longitude, logo, deliveryTime 
 			FROM places 
 			LIMIT $1 OFFSET CASE WHEN $2 > 0 THEN ($2 - 1) * $1 END;`,
 		 params.Limit, params.Page,
@@ -28,7 +28,7 @@ func (r *PlaceRepository) List(params models.Params) ([]models.Place, error) {
 
 	for rows.Next() {
 		i := models.Place{}
-		err := rows.Scan(&i.ID, &i.Name, &i.MinCost, &i.Grade, &i.Image, &i.Latitude, &i.Longitude)
+		err := rows.Scan(&i.ID, &i.Name, &i.MinCost, &i.Grade, &i.Image, &i.Latitude, &i.Longitude, &i.Logo, &i.DeliveryTime)
 
 		if err != nil {
 			return nil, err

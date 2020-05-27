@@ -7,6 +7,7 @@ type Place struct {
 	Grade			float32	`json:"grade"`
 	DeliveryTime	int		`json:"deliveryTime"`
 	Image			string	`json:"image"`
+	Logo			string	`json:"logo"`
 	Longitude		float64	`json:"longitude"`
 	Latitude		float64	`json:"latitude"`
 }

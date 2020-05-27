@@ -55,7 +55,7 @@ func (r *DishRepository) List(cafe int64, params models.Params) ([]models.Dish, 
 	rows, err := r.db.Query(
 		"SELECT id, name, cafe, ingredients, calories, weight, cost, inStock, image "+
 			"FROM dishes " +
-			"WHERE cafe = $1"+
+			"WHERE cafe = $1 " +
 			"LIMIT $2 OFFSET CASE WHEN $3 > 0 THEN ($3 - 1) * $2 END;",
 			cafe, params.Limit, params.Page,
 	)

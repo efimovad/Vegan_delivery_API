@@ -20,6 +20,7 @@ type Order struct {
 	Date		time.Time	`json:"date"`
 	Cost		int64		`json:"cost"`
 	Status		int64		`json:"status"`
+	Address		string		`json:"address"`
 }
 
 type Item struct {
@@ -30,4 +31,5 @@ type Item struct {
 type ItemFull struct {
 	Name	string	`json:"name"`
 	Count	int64	`json:"count"`
+	Price	int		`json:"price"`
 }
