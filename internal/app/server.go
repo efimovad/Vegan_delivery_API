@@ -87,12 +87,25 @@ func newDB(dbURL string) (*sql.DB, error) {
 	}
 	db.SetMaxOpenConns(20)
 
-	file, err := ioutil.ReadFile("./internal/database/sql/full_tables.sql")
+	file, err := ioutil.ReadFile("./internal/database/sql/init_schema.sql")
 	if err != nil {
 		return nil, err
 	}
 
 	requests := strings.Split(string(file), ";")
+	for _, request := range requests {
+		_, err = db.Exec(request)
+		if err != nil {
+			log.Fatal(err)//return nil, err
+		}
+	}
+
+	file, err = ioutil.ReadFile("./internal/database/sql/full_tables.sql")
+	if err != nil {
+		return nil, err
+	}
+
+	requests = strings.Split(string(file), ";")
 	for _, request := range requests {
 		_, err = db.Exec(request)
 		if err != nil {
