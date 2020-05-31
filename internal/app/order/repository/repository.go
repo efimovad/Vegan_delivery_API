@@ -77,7 +77,7 @@ func (r *OrderRepository) GetAll(user string, params models.Params) ([]models.Or
 			FROM orders ord
 			INNER JOIN places ON places.id = ord.cafe
 			WHERE ord."user" = $1 
-			ORDER BY id 
+			ORDER BY id desc 
 			LIMIT $2 OFFSET CASE WHEN $3 > 0 THEN ($3 - 1) * $2 END;`,
 		user, params.Limit, params.Page,
 	)
