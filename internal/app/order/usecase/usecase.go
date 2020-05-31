@@ -17,13 +17,13 @@ func NewOrderUsecase(repository order.IRepository) order.IUsecase {
 	}
 }
 
-func (u *Usecase) GetOrders(userID int64) ([]models.Order, error) {
+func (u *Usecase) GetOrders(user string) ([]models.Order, error) {
 	params := models.Params{
 		Desc:  false,
 		Limit: 10,
 		Page:  1,
 	}
-	return u.repo.GetAll(userID, params)
+	return u.repo.GetAll(user, params)
 }
 
 func (u *Usecase) CreateOrder(newOrder models.Order) (int64, error) {

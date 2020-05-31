@@ -60,7 +60,7 @@ func (s *Server) Configure() error {
 
 	orderRepo := order_repo.NewOrderRepository(db)
 	orderUcase := orderusecase.NewOrderUsecase(orderRepo)
-	orderhttp.NewHandler(g, orderUcase)
+	orderhttp.NewHandler(g, orderUcase, db)
 
 	return nil
 }
@@ -95,19 +95,6 @@ func newDB(dbURL string) (*sql.DB, error) {
 	requests := strings.Split(string(file), ";")
 	for _, request := range requests {
 		_, _ = db.Exec(request)
-	}
-
-	file, err = ioutil.ReadFile("./internal/database/sql/full_tables.sql")
-	if err != nil {
-		return nil, err
-	}
-
-	requests = strings.Split(string(file), ";")
-	for _, request := range requests {
-		_, err = db.Exec(request)
-		if err != nil {
-			log.Fatal(err)//return nil, err
-		}
 	}
 
 	return db, nil

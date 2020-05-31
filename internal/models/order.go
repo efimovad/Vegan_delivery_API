@@ -12,7 +12,7 @@ const (
 
 type Order struct {
 	ID			int64		`json:"id"`
-	User		int64		`json:"user,omitempty"`
+	User		string		`json:"user,omitempty"`
 	Cafe		int64		`json:"cafe,omitempty"`
 	CafeName	string		`json:"cafeName,omitempty"`
 	CafeLogo	string		`json:"cafeLogo,omitempty"`

@@ -54,7 +54,7 @@ func (r *OrderRepository) Create(newOrder models.Order) (int64, error) {
 	return newOrder.ID, err
 }
 
-func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.Order, error) {
+func (r *OrderRepository) GetAll(user string, params models.Params) ([]models.Order, error) {
 	var orders []models.Order
 	var names pq.StringArray
 	var counts pq.Int64Array
@@ -79,7 +79,7 @@ func (r *OrderRepository) GetAll(userID int64, params models.Params) ([]models.O
 			WHERE ord."user" = $1 
 			ORDER BY id 
 			LIMIT $2 OFFSET CASE WHEN $3 > 0 THEN ($3 - 1) * $2 END;`,
-		userID, params.Limit, params.Page,
+		user, params.Limit, params.Page,
 	)
 	if err != nil {
 		return nil, err

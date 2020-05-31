@@ -26,13 +26,15 @@ CREATE TABLE IF NOT EXISTS dishes (
 
 CREATE TABLE IF NOT EXISTS orders (
     id         bigserial primary key,
-    "user"     bigint NOT NULL,
+    "user"     varchar(30) NOT NULL,
     address    varchar(100),
     cafe       bigint REFERENCES places(id) ON DELETE RESTRICT,
     status     integer NOT NULL,
     cost       integer NOT NULL,
     date       timestamptz DEFAULT now()
 );
+
+CREATE INDEX  idx_orders_user ON orders("user");
 
 CREATE TABLE IF NOT EXISTS orders_details (
     order_id    bigint REFERENCES orders(id) ON DELETE RESTRICT,
